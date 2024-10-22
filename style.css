@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos gerais */
+body {
+    background-color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    color: aliceblue;
+    background-color: #333;
+    padding: 0 20px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+.butão {
+    background-color: #4caf4f05;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.butão-2 {
+    border-radius: 90px;
+    margin: 6px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.butão-2:hover {
+    background-color: #45a049;
+}
+
+.barra {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: #333;
+}
+
+.mensagens {
+    background: linear-gradient(to bottom, #808080, #d2b48c); /* Gradiente do cinza ao café claro */
+    background-size: cover;
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse; /* Inverte a direção das mensagens */
+    justify-content: space-between; /* Aplica espaçamento entre as mensagens */
+}
+
+.mensagens > div {
+    padding: 10px;
+    width: 100%;
+    max-width: 250px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    line-height: 22px;
+}
+
+.nome-outro {
+    display: block;
+    margin-bottom: 10px;
+    color: #34e906;
+}
+
+.mensagen___self {
+    align-self: flex-end;
+    color: white;
+    padding: 10px;
+    border-radius: 20px 20px 0px 20px;
+    background-color: #157415;
+}
+
+.mensagem___cliente {
+    align-self: flex-start;
+    color: white;
+    padding: 10px;
+    border-radius: 20px 20px 20px 0px;
+    background-color: #080b36;
+}
+
+.caixo_bem_vindo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.bem_vindo {
+    opacity: 0.1; /* Ajuste a opacidade para quase transparente */
+    width: 100px;
+    height: 100px;
+    border-radius: 90px;
+}
+
+.digitar{
+    width: 90%;
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    header {
+        padding: 10px;
+    }
+
+    .butão, .butão-2 {
+        width: 100%;
+        padding: 8px 16px;
+    }
+
+    .barra {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .digitar {
+        margin-right: 0;
+        margin-bottom: 10px;
+        padding: 20px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .butão, .butão-2 {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .barra {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .digitar {
+        padding: 20px;
+        background-color: #333;
+        color: aliceblue;
+        width: 100%;
+    }
+}
+
+.mensagem-span {
+    background-color: white;
+    border-radius: 30px 30px 30px 0;
+    position: absolute;
+    bottom: 180px; /* Espaço de 100px acima do footer */
+    right: 1;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+    width: 272px;
+    height: 92px;
+}
+footer{ margin-top: 100px;}
