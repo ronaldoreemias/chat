@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>estoque</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+        body, html { height: 100%; margin: 0; width: 100%; display: flex; font-family: 'Roboto', sans-serif; background: #F0F0F0; color: #333; }
+        .header-full { background: linear-gradient(to bottom, #2c3e50, #4ca1af); color: white; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 70%; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+        .header-content { display: flex; flex-direction: column; width: 100%; max-width: 400px; padding: 20px; }
+        .product-registration, .payment-section { margin-bottom: 20px; }
+        .main-full { background: linear-gradient(to bottom, #2c3e50, #4ca1af); flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-around; width: 30%; box-shadow: -2px 0 5px rgba(0,0,0,0.1); overflow: hidden; }
+        .card { width: 100%; height: 45%; background-color: transparent; border: none; box-shadow: none; }
+        .card-body { background-color: #2c2c36; border: 1px solid #DDD; border-radius: 10px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); overflow: auto; }
+        .historico { width: 100%; height: 100%; background-color: #000000; border: 1px solid #DDD; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.05); overflow-y: auto; }
+        .historico-entry { margin-bottom: 10px; padding: 10px; background-color: #F9F9F9; border: 1px solid #DDD; border-radius: 5px; }
+        input, select, button { margin-top: 10px; background-color: #FFF; border: 1px solid #DDD; color: #333; padding: 10px; border-radius: 10px; font-size: 1em; width: 100%; }
+        input:focus, select:focus, button:focus { outline: none; border-color: #999; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .result-box { margin-top: 20px; padding: 20px; background-color: #FFF; border: 1px solid #DDD; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+        .result-content { display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1em; }
+        .result-content p { margin: 5px 0; }
+
+        /* Lock Screen Styles */
+        .lock-screen { display: flex; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); z-index: 9999; }
+        .lock-screen-content { background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="lock-screen">
+        <div class="lock-screen-content">
+            <h2>acesso bloqueado</h2>
+            <p>sistema ainda em desenvolvimento</p>
+            <p>quando terminado , será liberado</p>
+            <input type="text" id="username" placeholder="Nome de Usuário">
+            <input type="password" id="password" placeholder="Senha">
+            <button onclick="unlockScreen()" style="background-color: red; color: white;">Entrar</button>
+            <p id="error-message" style="color: red; display: none;">Senha incorreta!</p>
+        </div>
+    </div>
+    <header class="header-full">
+        <div class="header-content">
+            <div style="width: 100%; color: aliceblue; text-align: center;">
+                <h1>Sistema de estoque</h1>
+            </div>
+            <div class="product-registration">
+                <p>Cadastrar Produto</p>
+                <input type="text" id="product-name" placeholder="Nome do Produto">
+                <input type="number" id="product-value" placeholder="Valor do Produto">
+                <input type="number" id="product-quantity" placeholder="Quantidade">
+                <button onclick="registerProduct()">Cadastrar Produto</button>
+            </div>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <a href="caixa.html">
+                    <button style="background-color: red; height: 60px; width: 200px; color: aliceblue;">abrir o caixa</button>
+                </a>
+            </div>
+    </header>
+    <main id="main-content" class="main-full">
+        <div class="card">
+            <div class="card-body">
+                <div id="result" class="result-box"></div>
+            </div>
+            <div style="width: 100%; background-color: rgba(236, 8, 8, 0.726); color: rgb(255, 255, 255); text-align: center;">
+                <h1>Histórico</h1>
+            </div>
+        </div>
+        <div class="historico">
+            <div class="conteudo_historico"></div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let historyData = JSON.parse(localStorage.getItem('historyData')) || [];
+let totalValue = historyData.reduce((acc, item) => acc + (item.productValue * item.productQuantity), 0);
+
+function unlockScreen() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('error-message');
+
+    if (password === 'admin12#@') {
+        document.querySelector('.lock-screen').style.display = 'none';
+    } else {
+        errorMessage.style.display = 'block';
+    }
+}
+
+function registerProduct() {
+    const productName = document.getElementById('product-name').value;
+    const productValue = parseFloat(document.getElementById('product-value').value);
+    const productQuantity = parseInt(document.getElementById('product-quantity').value);
+
+    if (!productName || isNaN(productValue) || isNaN(productQuantity)) {
+        alert('Preencha todos os campos!');
+        return;
+    }
+
+    const productTotal = productValue * productQuantity;
+    totalValue += productTotal;
+
+    const data = {
+        productName,
+        productValue,
+        productQuantity
+    };
+
+    historyData.push(data);
+    localStorage.setItem('historyData', JSON.stringify(historyData));
+
+    updateHistory();
+    updateTotalValue();
+    clearProductInputs();
+}
+
+function calculateChange() {
+    const paymentMethod = document.getElementById('payment-method').value;
+    const amountPaid = parseFloat(document.getElementById('amount-paid').value);
+    let change = amountPaid - totalValue;
+
+    if (paymentMethod === 'credito') {
+        const installments = parseInt(document.getElementById('installments').value);
+        change = (totalValue / installments).toFixed(2);
+    }
+
+    const resultHtml = `
+        <div class="result-content">
+            <p>Método de Pagamento: ${paymentMethod}</p>
+            <p>Valor Pago: ${amountPaid.toFixed(2)}</p>
+            ${paymentMethod === 'credito' ? `<p>Parcelas: ${document.getElementById('installments').value} x ${change}</p>` : `<p>Troco: ${change.toFixed(2)}</p>`}
+        </div>
+    `;
+
+    const resultBox = document.getElementById('result');
+    resultBox.innerHTML = resultHtml;
+
+    if (paymentMethod !== 'credito' && change < 0) {
+        resultBox.style.backgroundColor = 'red';
+    } else {
+        resultBox.style.backgroundColor = 'blue';
+    }
+}
+
+function updateHistory() {
+    const historyContent = document.querySelector('.conteudo_historico');
+    historyContent.innerHTML = '';
+    historyData.forEach((entry, index) => {
+        const entryHtml = `
+            <div class="historico-entry">
+                <p>Produto: ${entry.productName}</p>
+                <p>Valor do Produto: ${entry.productValue.toFixed(2)}</p>
+                <p>Quantidade: ${entry.productQuantity}</p>
+                <p>Total: ${(entry.productValue * entry.productQuantity).toFixed(2)}</p>
+                <button style="background-color: red; color: white;" onclick="deleteEntry(${index})">Excluir</button>
+            </div>
+        `;
+        historyContent.innerHTML += entryHtml;
+    });
+}
+
+function updateTotalValue() {
+    const totalHtml = `
+        <div class="result-content">
+            <p>Valor Total Acumulado: ${totalValue.toFixed(2)}</p>
+        </div>
+    `;
+    document.getElementById('result').innerHTML = totalHtml;
+}
+
+function deleteEntry(index) {
+    totalValue -= historyData[index].productValue * historyData[index].productQuantity;
+    historyData.splice(index, 1);
+    localStorage.setItem('historyData', JSON.stringify(historyData));
+    updateHistory();
+    updateTotalValue();
+}
+
+function clearProductInputs() {
+    document.getElementById('product-name').value = '';
+    document.getElementById('product-value').value = '';
+    document.getElementById('product-quantity').value = '';
+}
+
+function showInstallments() {
+    const paymentMethod = document.getElementById('payment-method').value;
+    const installmentsSection = document.getElementById('installments-section');
+    if (paymentMethod === 'credito') {
+        installmentsSection.style.display = 'block';
+    } else {
+        installmentsSection.style.display = 'none';
+        document.getElementById('installments').value = '';
+    }
+}
+
+window.onload = function() {
+    updateHistory();
+    updateTotalValue();
+};
+
+    </script>
+
+</body>
+</html>

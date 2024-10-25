@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>historico</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #2c3e50, #4ca1af);
+    color: #333;
+}
+
+header {
+    background-color: #2d3a47;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 10px;
+}
+
+.tabela_cabeçalho{
+    margin: 20px;
+}
+
+.tabela_informação{
+    margin: 20px;
+}
+
+header input, header button {
+    height: 40px;
+    margin: 0 10px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+header button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+header button:hover {
+    background-color: #0056b3;
+}
+
+main {
+    height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.tabela {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    max-width: 800px;
+    margin-bottom: 0px;
+    color: #f6f7f8;
+}
+
+.box_histórico {
+    width: 80%;
+    max-width: 800px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 7px;
+    overflow-y: auto;
+}
+
+.historico-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.historico-item p {
+    margin: 0 10px;
+}
+
+.historico-item button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.historico-item button:hover {
+    background-color: #c82333;
+}
+
+footer {
+    height: 100px;
+    width: 100%;
+    background-color: #082644;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #e0e0e0;
+    bottom: 0;
+}
+
+footer a{
+    margin: 10px;
+    color: white;
+}
+
+footer h1 {
+    font-size: 1.2em;
+    color: rgb(255, 255, 255);
+}
+
+@media (max-width: 668px) {
+    main {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+    header {
+        flex-direction: column;
+        height: auto;
+    }
+
+    header input {
+        margin: 10px;
+    }
+
+    header button {
+        margin-top: 10px;
+    }
+
+    .box_histórico {
+        width: 100%;
+    }
+
+    .historico-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .historico-item p {
+        margin: 5px 0;
+    }
+
+    button {
+        margin: 10px 0; /* Aumenta o espaçamento entre os botões */
+    }
+}
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #142480a9;
+    border-radius: 20px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <header style="text-align: center;">
+        <h1 style="color: aliceblue;">ORÇAMENTO</h1>
+        <div class="tabela_cabeçalho">
+                        <a href="historico.html">
+                <button style="background-color: red; height: 30px; width: 50px; color: aliceblue;">voltar</button>
+            </a>
+            <input type="text" id="cliente" class="inserir_serviço" placeholder="cliente">
+            <input type="number" id="validade_orçamento" placeholder="validade_orçamento">
+            <input type="date" id="data" class="inserir_serviço" placeholder="data" >
+            <input type="text" id="vendedor" class="inserir_serviço" placeholder="vendedor">
+            <button id="adicionar_cabeçalho">Adicionar dados do cliente</button>
+        </div>
+
+        <div class="tabela_informação">
+            <input type="number" id="quantidade" placeholder="quantidade">
+            <input type="text" id="material" class="inserir_serviço" placeholder="serviço_prestado">
+            <input type="number" id="preço_unitario" class="inserir_valor" placeholder="preço_unitario">
+            <input type="number" id="valor_pago" class="inserir_serviço" placeholder="valor_pago">
+            <button id="adicionar">Adicionar dados do orçamento</button>
+            <button id="imprimir" style="background-color: green;">imprimir</button>
+        </div>
+
+        <div style="display: flex;">
+            <div style="color: white; margin: 10px;" id="valor_total">Valor Total: R$ 0.00</div>
+            <div style="color: white; margin: 10px;" id="valor_devedor">Valor pendente : R$ 0.00</div>
+        </div>
+
+    </header>
+    
+
+    <main>
+        <div class="tabela">
+            <p>cliente</p>
+            <p>validade do orçamento</p>
+            <p>data</p>
+            <p>vendedor(a)</p>
+        </div>
+        <div class="box_histórico" id="historico">
+        </div>
+
+    </main>
+
+    <footer>
+        <h1>sistema da cooperativa i9</h1>
+        <br>
+        <DIV >
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">TERCERIZE SEUS DESIGNER</a>
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">CONSERTE SEU CELULAR</a>
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">CONSERTE SEU COMPUTADOR </a>
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">SUPORTE DE T.I </a>
+        </DIV>
+
+    </footer>
+
+    <script>
+        document.getElementById('adicionar_cabeçalho').addEventListener('click', function() {
+    const cliente = document.getElementById('cliente').value;
+    const validade = document.getElementById('validade_orçamento').value;
+    const data = document.getElementById('data').value;
+    const vendedor = document.getElementById('vendedor').value;
+    const div = document.createElement('div');
+    div.classList.add('historico-item');
+    div.innerHTML = `
+        <p>Cliente: ${cliente}</p>
+        <p>Validade: ${validade}</p>
+        <p>Data: ${data}</p>
+        <p>Vendedor: ${vendedor}</p>
+        <button class="excluir">Excluir</button>
+    `;
+    document.getElementById('historico').appendChild(div);
+    document.getElementById('cliente').value = '';
+    document.getElementById('validade_orçamento').value = '';
+    document.getElementById('data').value = '';
+    document.getElementById('vendedor').value = '';
+    div.querySelector('.excluir').addEventListener('click', function() {
+        div.remove();
+    });
+});
+
+let valorTotal = 0;
+let valorDevedor = 0;
+
+document.getElementById('adicionar').addEventListener('click', function() {
+    const quantidade = parseFloat(document.getElementById('quantidade').value);
+    const material = document.getElementById('material').value;
+    const precoUnitario = parseFloat(document.getElementById('preço_unitario').value);
+    const valorPago = parseFloat(document.getElementById('valor_pago').value);
+    const valorItem = quantidade * precoUnitario;
+    valorTotal += valorItem;
+    valorDevedor += valorItem - valorPago;
+    const div = document.createElement('div');
+    div.classList.add('historico-item');
+    div.style.display = 'flex';
+    div.style.justifyContent = 'space-between';
+    div.style.marginBottom = '10px';
+    div.innerHTML = `
+        <div>
+            <p>Quantidade: ${quantidade}</p>
+            <p>Material: ${material}</p>
+        </div>
+        <div style="margin-left: 100px;">
+            <p>Preço Unitário: ${precoUnitario}</p>
+            <p>Valor Pago: ${valorPago}</p>
+        </div>
+        <button class="excluir">Excluir</button>
+    `;
+    document.getElementById('historico').appendChild(div);
+    document.getElementById('valor_total').innerText = `Valor Total: R$ ${valorTotal.toFixed(2)}`;
+    document.getElementById('valor_devedor').innerText = `Valor pendente : R$ ${valorDevedor.toFixed(2)}`;
+    document.getElementById('quantidade').value = '';
+    document.getElementById('material').value = '';
+    document.getElementById('preço_unitario').value = '';
+    document.getElementById('valor_pago').value = '';
+    div.querySelector('.excluir').addEventListener('click', function() {
+        
+        valorDevedor -= valorPago - alorTotal ;
+        document.getElementById('valor_total').innerText = `Valor Total: R$ ${valorTotal.toFixed(2)}`;
+        document.getElementById('valor_devedor').innerText = `Valor pendente : R$ ${valorDevedor.toFixed(2)}`;
+        div.remove();
+    });
+});
+
+// Adicionar função de imprimir
+document.getElementById('imprimir').addEventListener('click', function() {
+    window.print();
+});
+
+    </script>
+</body>
+</html>

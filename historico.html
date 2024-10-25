@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>historico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: #333;
+        }
+
+        header {
+            background-color: #2d3a47;
+            height: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 10px;
+        }
+
+        header input,
+        header button {
+            height: 40px;
+            margin: 0 10px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        header button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        header button:hover {
+            background-color: #0056b3;
+        }
+
+        main {
+            height: calc(100vh - 160px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .tabela {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        max-width: 800px;
+        color: #f6f7f8;
+        text-align: center;
+    }
+
+    .tabela p {
+        flex: 1;
+    }
+
+    .box_histórico {
+        width: 80%;
+        max-width: 800px;
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 7px;
+        overflow-y: auto;
+    }
+
+    .historico-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .historico-item p {
+        flex: 1;
+        text-align: center;
+    }
+
+    .historico-item button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .historico-item button:hover {
+        background-color: #c82333;
+    }
+
+        footer {
+            height: 100px;
+            width: 100%;
+            background-color: #082644;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top: 2px solid #e0e0e0;
+            bottom: 0;
+        }
+
+        footer a {
+            margin: 10px;
+            color: white;
+        }
+
+        footer h1 {
+            font-size: 1.2em;
+            color: rgb(255, 255, 255);
+        }
+
+        @media (max-width: 668px) {
+            main {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px;
+            }
+
+            header {
+                flex-direction: column;
+                height: auto;
+            }
+
+            header input {
+                margin: 10px;
+            }
+
+            header button {
+                margin-top: 10px;
+            }
+
+            .box_histórico {
+                width: 100%;
+            }
+
+            .historico-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .historico-item p {
+                margin: 5px 0;
+            }
+
+            button {
+                margin: 10px 0;
+                /* Aumenta o espaçamento entre os botões */
+            }
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #161929a9;
+            border-radius: 20px;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <section>
+            <div class="dropdown">
+                <button style="background-color: red;">Menu</button>
+                <div class="dropdown-content">
+                    <a href="estoque.html">caixa online</a>
+                    <a href="https://reemias.github.io/nota-fiscal/">Emitir Nota Fiscal</a>
+                    <a href="orçamento.html">Fazer Orçamento</a>
+                    <a href="https://reemias.github.io/trabalho/">Suporte T.I</a>
+                </div>
+            </div>
+        </section>
+        <input type="text" id="servico" class="inserir_serviço" placeholder="Serviço">
+        <input type="date" id="data_servico" class="inserir_serviço" placeholder="Data do Serviço">
+        <input type="number" id="valor" class="inserir_valor" placeholder="Valor">
+        <button id="adicionar">Adicionar</button>
+        <button id="imprimir">imprimir</button>
+    </header>
+    <main>
+        <div style="text-align: start; height: 40px; color: aliceblue; margin-top: 40px;" id="valor_total">Valor Total: R$ 0.00</div>
+
+        <div class="tabela">
+            <p>Serviços Prestados</p>
+            <p>Data do Serviço Prestado</p>
+            <p>Valor Cobrado</p>
+        </div>
+       
+        <div class="box_histórico" id="historico"></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div style="width: 100%; display: flex; justify-content: center;">
+            <input type="date" id="data_filtro" placeholder="Filtrar por data" style="width: 50%; height: 40px;">
+            <button id="filtrar" style="background-color: rgb(12, 95, 4); color: white; width: 10%; margin-left: 10px; height: 40px; cursor: pointer;">Filtrar</button>
+        </div>
+    </main>
+    <footer>
+        <h1>sistema da cooperativa i9</h1>
+        <br>
+        <div>
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">TERCERIZE SEUS DESIGNER</a>
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">CONSERTE SEU CELULAR</a>
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">CONSERTE SEU COMPUTADOR</a>
+            <a href="https://wa.me/5582988873225?text=Olá,%20gostaria%20de%20mais%20informações%20sobre%20seus%20serviços.">SUPORTE DE T.I</a>
+        </div>
+    </footer>
+    <script>
+       let valorTotal = 0;
+
+// Função para salvar os dados no localStorage
+function salvarDados() {
+    const historicoDiv = document.getElementById('historico');
+    localStorage.setItem('historico', historicoDiv.innerHTML);
+    localStorage.setItem('valorTotal', valorTotal);
+}
+
+// Função para carregar os dados do localStorage e calcular o valor total
+function carregarDados() {
+    const historicoDiv = document.getElementById('historico');
+    const historicoSalvo = localStorage.getItem('historico');
+    const valorTotalSalvo = localStorage.getItem('valorTotal');
+
+    if (historicoSalvo) {
+        historicoDiv.innerHTML = historicoSalvo;
+        valorTotal = parseFloat(valorTotalSalvo) || 0;
+        calcularValorTotal(); // Chama a função para calcular o valor total
+    }
+}
+
+// Função para calcular o valor total a partir dos itens no localStorage
+function calcularValorTotal() {
+    const historicoItems = document.getElementsByClassName('historico-item');
+    let total = 0;
+
+    for (let i = 0; i < historicoItems.length; i++) {
+        const valorItem = parseFloat(historicoItems[i].children[2].textContent.replace('R$ ', '').trim());
+        total += valorItem;
+    }
+
+    valorTotal = total;
+    document.getElementById('valor_total').textContent = `Valor Total: R$ ${valorTotal.toFixed(2)}`;
+}
+
+// Carregar os dados ao carregar a página
+window.addEventListener('load', carregarDados);
+
+document.getElementById('adicionar').addEventListener('click', function() {
+    const servico = document.getElementById('servico').value;
+    const dataServico = document.getElementById('data_servico').value;
+    const valor = parseFloat(document.getElementById('valor').value);
+
+    if (servico && dataServico && valor) {
+        const historicoDiv = document.getElementById('historico');
+        const novoItem = document.createElement('div');
+        novoItem.classList.add('historico-item');
+        const servicoP = document.createElement('p');
+        servicoP.textContent = ` ${servico}`;
+        const dataP = document.createElement('p');
+        dataP.textContent = ` ${dataServico}`;
+        const valorP = document.createElement('p');
+        valorP.textContent = ` R$ ${valor.toFixed(2)}`;
+        const deletarBtn = document.createElement('button');
+        deletarBtn.textContent = 'Deletar';
+        deletarBtn.classList.add('deletar-btn');
+        novoItem.appendChild(servicoP);
+        novoItem.appendChild(dataP);
+        novoItem.appendChild(valorP);
+        novoItem.appendChild(deletarBtn);
+        historicoDiv.appendChild(novoItem);
+
+        // Atualizar o valor total
+        valorTotal += valor;
+        document.getElementById('valor_total').textContent = `Valor Total: R$ ${valorTotal.toFixed(2)}`;
+
+        // Salvar os dados no localStorage
+        salvarDados();
+
+        // Limpar os campos após adicionar
+        document.getElementById('servico').value = '';
+        document.getElementById('data_servico').value = '';
+        document.getElementById('valor').value = '';
+    } else {
+        alert('Por favor, preencha todos os campos.');
+    }
+});
+
+document.getElementById('historico').addEventListener('click', function(e) {
+    if (e.target.classList.contains('deletar-btn')) {
+        const valorItem = parseFloat(e.target.previousSibling.textContent.replace('R$ ', ''));
+        valorTotal -= valorItem;
+        document.getElementById('valor_total').textContent = `Valor Total: R$ ${valorTotal.toFixed(2)}`;
+        e.target.parentElement.remove();
+
+        // Salvar os dados no localStorage
+        salvarDados();
+    }
+});
+
+// Adicionar função de imprimir
+document.getElementById('imprimir').addEventListener('click', function() {
+    window.print();
+});
+
+// Função para filtrar os dados por data
+document.getElementById('filtrar').addEventListener('click', function() {
+    const dataFiltro = document.getElementById('data_filtro').value;
+    const historicoItems = document.getElementsByClassName('historico-item');
+    let encontrado = false;
+
+    for (let i = 0; i < historicoItems.length; i++) {
+        const dataItem = historicoItems[i].children[1].textContent.trim();
+        if (dataItem === dataFiltro) {
+            historicoItems[i].style.display = 'flex';
+            encontrado = true;
+        } else {
+            historicoItems[i].style.display = 'none';
+        }
+    }
+
+    if (!encontrado) {
+        alert('Não foi possível encontrar o histórico do pedido.');
+    }
+});
+
+</script>
+</body>
+
+</html>

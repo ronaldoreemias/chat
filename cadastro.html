@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Conta</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="estilocadastro.css">
+</head>
+<body style="background: linear-gradient(to right, #2c3e50, #4ca1af);">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4" style="background-color: aliceblue; color: rgb(8, 8, 8); margin-top: 100px;">
+                    <h1 class="text-center mb-4">Cadastre sua conta</h1>
+                    <div class="form-group">
+                        <input type="text" id="nome" class="form-control" placeholder="Digite seu nome">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="senha" class="form-control" placeholder="Crie sua senha">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="confirma-senha" class="form-control" placeholder="Confirme sua senha">
+                    </div>
+                    <button onclick="cadastrarConta()" class="btn btn-primary btn-block">Cadastrar</button>
+                    <div class="text-center mt-3">
+                        <a href="index.html" style="color: rgb(128, 4, 0); height: 70px;">Voltar da tela de login</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function cadastrarConta() {
+            const nome = document.getElementById('nome').value;
+            const senha = document.getElementById('senha').value;
+            const confirmaSenha = document.getElementById('confirma-senha').value;
+
+            if (!nome || !senha || !confirmaSenha) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            if (senha !== confirmaSenha) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            localStorage.setItem('nome', nome);
+            localStorage.setItem('senha', senha);
+            alert('Conta cadastrada com sucesso!');
+            document.getElementById('historico_cadastro').innerHTML = `<p>Nome: ${nome}</p><p>Senha: ${senha}</p>`;
+        }
+    </script>
+</body>
+</html>
