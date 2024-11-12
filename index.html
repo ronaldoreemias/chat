@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat com AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .caixa{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        height: 100%;
+        padding: 10px;
+        overflow-y: auto; /* Barra de rolagem apenas vertical */
+        }
+
+        .caixa div {
+            margin-top: 1px;
+        }
+   
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Converse com nossa I.A</h2>
+    </header>
+    <main>
+        <div class="caixa" id="chat-container">
+            <div class="pombo" style="width: 90%; background-color: red; color: white; margin: 10px;
+            height: 90px; text-align: center; padding: 5px; border-radius: 7px;">
+                <p>ATENÇÃO ! caso for pesquisar</p>
+                <p>escreva "pesquise sobre" antes do que quer pesquisar</p>
+            </div>
+
+        </div>
+    </main>
+    <footer>
+        <div>
+            <input type="text" id="user-input" placeholder="Pergunte alguma coisa...">
+            <button onclick="processInput()">Enviar</button>
+        </div>
+    </footer>
+    <script src="js.js"></script>    
+</body>
+</html>
