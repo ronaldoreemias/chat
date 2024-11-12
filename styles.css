@@ -1,0 +1,141 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    background-color: #3a3838;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    background-color: #0047ab;
+    color: white;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+main {
+    height: calc(100vh - 130px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    padding-top: 60px;
+    padding-bottom: 70px;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    overflow-y: auto;
+}
+
+footer {
+    background-color: #0047ab;
+    height: 70px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    padding: 0 20px;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+footer div {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer input {
+    margin-top: 15px;
+    height: 20px;
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+footer button {
+    margin-top: 15px;
+    height: 40px;
+    width: 20%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px ;
+    background-color: #fa120a;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+h1 {
+    margin: 0;
+}
+
+#chat-container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #0078d4;
+    color: white;
+    border-radius: 15px 15px 0px 15px  ;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 60%;
+}
+
+.ai-message {
+    align-self: flex-start;
+    background-color: #f1f0f0;
+    color: black;
+    border-radius: 0px 15px 15px 15px  ;
+    padding: 10px;
+    margin-bottom: 10px;
+    max-width: 70%;
+}
+
+/* Adicione isso ao seu arquivo CSS */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.loader span {
+    display: block;
+    width: 5px;
+    height: 5px;
+    margin: 0 2px;
+    background: #3498db;
+    border-radius: 50%;
+    animation: bounce 1s infinite;
+}
+
+.loader span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loader span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
